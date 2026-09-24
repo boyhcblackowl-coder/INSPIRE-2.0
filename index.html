@@ -1,0 +1,208 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+  <meta name="theme-color" content="#0C0D0F">
+  <meta name="background-color" content="#0C0D0F">
+  <meta name="description" content="INSPIRE - The Digital Home of sOWLdiers">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+  <meta name="apple-mobile-web-app-title" content="INSPIRE">
+  <meta name="mobile-web-app-capable" content="yes">
+
+  <title>INSPIRE</title>
+
+  <link rel="manifest" href="manifest.webmanifest">
+  <link rel="icon" type="image/png" sizes="64x64" href="icons/favicon-64.png">
+  <link rel="apple-touch-icon" sizes="180x180" href="icons/icon-180.png">
+
+  <style>
+    :root {
+      --black:#0C0D0F;
+      --gold:#D7B97C;
+      --gold-dark:#B89350;
+      --cream:#F8F4EB;
+      --white:#FFFDF9;
+      --muted:#8F8879;
+      --safe-top:env(safe-area-inset-top,0px);
+      --safe-bottom:env(safe-area-inset-bottom,0px);
+    }
+
+    * { box-sizing:border-box; }
+    html,body { margin:0; width:100%; height:100%; overflow:hidden; background:var(--black); font-family:Arial,sans-serif; }
+    body { padding-top:var(--safe-top); padding-bottom:var(--safe-bottom); }
+
+    .app {
+      position:fixed;
+      inset:var(--safe-top) 0 var(--safe-bottom) 0;
+      background:var(--black);
+    }
+
+    #inspireFrame {
+      width:100%;
+      height:100%;
+      border:0;
+      background:var(--cream);
+      display:block;
+    }
+
+    #splash {
+      position:absolute;
+      inset:0;
+      z-index:10;
+      background:
+        radial-gradient(circle at 50% 20%, rgba(215,185,124,.15), transparent 35%),
+        var(--black);
+      display:flex;
+      flex-direction:column;
+      align-items:center;
+      justify-content:center;
+      color:white;
+      transition:opacity .35s ease, visibility .35s ease;
+    }
+    #splash.hidden { opacity:0; visibility:hidden; pointer-events:none; }
+
+    .logo {
+      width:120px;
+      height:120px;
+      object-fit:contain;
+      margin-bottom:12px;
+    }
+    .brand {
+      letter-spacing:.25em;
+      font-size:25px;
+      font-weight:900;
+      margin-left:.25em;
+    }
+    .sub { color:#CDBE9C; font-size:12px; margin-top:8px; }
+    .spinner {
+      width:28px; height:28px;
+      margin-top:24px;
+      border:3px solid rgba(215,185,124,.25);
+      border-top-color:var(--gold);
+      border-radius:50%;
+      animation:spin .8s linear infinite;
+    }
+    @keyframes spin { to { transform:rotate(360deg); } }
+
+    #fallback {
+      position:absolute;
+      z-index:20;
+      left:12px; right:12px; bottom:calc(12px + var(--safe-bottom));
+      background:rgba(12,13,15,.96);
+      border:1px solid rgba(215,185,124,.32);
+      color:#fff;
+      border-radius:16px;
+      padding:13px;
+      display:none;
+      box-shadow:0 12px 35px rgba(0,0,0,.35);
+    }
+    #fallback strong { display:block; color:var(--gold); margin-bottom:5px; }
+    #fallback p { margin:0 0 10px; color:#D0CBC0; font-size:12px; line-height:1.45; }
+    #fallback a {
+      display:inline-block;
+      color:var(--black);
+      background:var(--gold);
+      text-decoration:none;
+      padding:9px 12px;
+      border-radius:10px;
+      font-size:12px;
+      font-weight:800;
+    }
+
+    #offline {
+      position:absolute;
+      z-index:30;
+      inset:0;
+      display:none;
+      align-items:center;
+      justify-content:center;
+      background:var(--black);
+      color:#fff;
+      padding:25px;
+      text-align:center;
+    }
+    #offline .box { max-width:380px; }
+    #offline img { width:90px; height:90px; object-fit:contain; }
+    #offline h1 { margin:12px 0 6px; }
+    #offline p { margin:0; color:#BEB7A7; line-height:1.5; }
+
+    @media (display-mode:standalone) {
+      #fallback { display:none!important; }
+    }
+  </style>
+</head>
+<body>
+  <div class="app">
+    <iframe
+      id="inspireFrame"
+      title="INSPIRE"
+      src="https://script.google.com/macros/s/AKfycbzsW1cYUPoJwd2R1xUDbSxFE6QM_qFsGyL4eYYGDwLtN5NtXa3EGe3vYz5wrPryAbIjCA/exec"
+      allow="clipboard-read; clipboard-write"
+      referrerpolicy="strict-origin-when-cross-origin"
+    ></iframe>
+
+    <div id="splash">
+      <img class="logo" src="icons/icon-192.png" alt="Black Owl">
+      <div class="brand">INSPIRE</div>
+      <div class="sub">The Digital Home of sOWLdiers</div>
+      <div class="spinner"></div>
+    </div>
+
+    <div id="fallback">
+      <strong>Having trouble loading INSPIRE?</strong>
+      <p>Open the web app directly once, then return to this shortcut.</p>
+      <a href="https://script.google.com/macros/s/AKfycbzsW1cYUPoJwd2R1xUDbSxFE6QM_qFsGyL4eYYGDwLtN5NtXa3EGe3vYz5wrPryAbIjCA/exec" target="_blank" rel="noopener">Open INSPIRE directly</a>
+    </div>
+
+    <div id="offline">
+      <div class="box">
+        <img src="icons/icon-192.png" alt="Black Owl">
+        <h1>You're offline</h1>
+        <p>Reconnect to the internet, then reopen INSPIRE.</p>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    const frame = document.getElementById('inspireFrame');
+    const splash = document.getElementById('splash');
+    const fallback = document.getElementById('fallback');
+    const offline = document.getElementById('offline');
+
+    let frameLoaded = false;
+
+    frame.addEventListener('load', () => {
+      frameLoaded = true;
+      setTimeout(() => splash.classList.add('hidden'), 300);
+    });
+
+    // If cross-origin loading gets stuck, give the user a direct-open fallback.
+    setTimeout(() => {
+      if (!frameLoaded) {
+        splash.classList.add('hidden');
+        fallback.style.display = 'block';
+      }
+    }, 9000);
+
+    function updateOnlineState() {
+      if (navigator.onLine) {
+        offline.style.display = 'none';
+      } else {
+        offline.style.display = 'flex';
+      }
+    }
+
+    window.addEventListener('online', updateOnlineState);
+    window.addEventListener('offline', updateOnlineState);
+    updateOnlineState();
+
+    if ('serviceWorker' in navigator) {
+      window.addEventListener('load', () => {
+        navigator.serviceWorker.register('./service-worker.js').catch(() => {});
+      });
+    }
+  </script>
+</body>
+</html>
